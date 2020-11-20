@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ホッケーゲーム</title>
+    <style>
+        canvas{
+            background: #eee; 
+            display: block; 
+            margin: 0 auto;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Player2</h1>
+    <canvas id="myCanvas" width="480" height="600"></canvas> 
+    <h1>Player1</h1>
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var x = canvas.width/2;
+    var y = canvas.height-30;
+
+    var dx = 3;
+    var dy = -3;
+    var ballRadius = 15;
+
+    var paddleHeight = 10;
+    var paddleWidth = 120;
+    var paddle1 = (canvas.width-paddleWidth)/2;  //パドル1の左端
+    var paddle2 = (canvas.width-paddleWidth)/2;  //パドル2の左端
+
+    var rightPressed = false;
+    var leftPressed = false; 
+    var rightS = false;
+    var leftA = false;
+
+    document.addEventListener("keydown", keyDownHandler, false);　　//キー押されたら関数発動
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    function keyDownHandler(e) {
+        if(e.key == "Right" || e.key == "ArrowRight") {   //キー押して右なら、trueに
+        rightPressed = true;
+      　}
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+      　}
+
+      if(e.key == "s") {  
+        rightS = true;
+      　}
+        else if(e.key == "a") {
+        leftA = true;
+      　}
+    }
+
+    function keyUpHandler(e) {
+        if(e.key == "Right" || e.key == "ArrowRight") {　//キー離したらfalse
+        rightPressed = false;
+      　}
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+      　}
+
+      if(e.key == "s") {   
+        rightS = false;
+      　}
+        else if(e.key == "a") {
+        leftA = false;
+      　}
+    }
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawPaddle1(){
+        ctx.fillStyle ="#0095DD";
+        ctx.fillRect(paddle1, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    }
+
+    function drawPaddle2(){
+        ctx.fillStyle ="#0095DD";
+        ctx.fillRect(paddle2,0, paddleWidth, paddleHeight);
+    }
+
+    function drawStage(){
+        ctx.fillRect(0,canvas.height/2, canvas.width,1);
+        ctx.beginPath();
+        ctx.arc(canvas.width/2,canvas.height/2, 30, 0, Math.PI*2);
+        ctx.strokeStyle = "#0095DD";
+        ctx.stroke();
+        ctx.closePath();
+        ctx.strokeStyle ="#0095DD";
+        ctx.strokeRect(0,0, canvas.width, canvas.height);
+
+    }
+
+    function draw(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        drawPaddle1();
+        drawPaddle2();
+        drawStage();
+        
+        if(x+dx>canvas.width-ballRadius || x+dx< ballRadius){　　//左右壁の反射
+            dx = -dx;
+        }
+        if(y+dy< ballRadius){　　//パドル２の反射
+            if(x >paddle2 && x < paddle2 + paddleWidth){
+            dy = -dy;
+            }else{
+            alert("Player1 Win!");
+            document.location.reload();  //ページの再読み込み
+            clearInterval(interval);
+            }
+        }
+        if(y+dy>canvas.height-ballRadius){
+            if(x >paddle1 && x < paddle1 + paddleWidth){　　//パドル1の反射
+                dy =-dy;
+                
+            }else{
+            alert("Player2 Win!");
+            document.location.reload();  //ページの再読み込み
+            clearInterval(interval);
+            }
+        }
+        
+        if(rightPressed && paddle1 < canvas.width-paddleWidth) {　　//パドルの移動
+        paddle1 += 7;
+        }
+        else if(leftPressed && paddle1 > 0) {
+        paddle1 -= 7;
+        }
+
+        if(rightS && paddle2 < canvas.width-paddleWidth) {　　//パドルの移動
+        paddle2 += 7;
+        }
+        else if(leftA && paddle2 > 0) {
+        paddle2 -= 7;
+        }
+        
+        x += dx;
+        y += dy;
+
+        
+
+    }
+    var interval =setInterval(draw,5);
+
+</script>
+</body>
+</html>
