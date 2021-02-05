@@ -128,19 +128,19 @@
                 
             }else{
             alert("Player2 Win!");
-            document.location.reload();  //ページの再読み込み
+            document.location.reload();  
             clearInterval(interval);
             }
         }
         
-        if(rightPressed && paddle1 < canvas.width-paddleWidth) {　　//パドルの移動
+        if(rightPressed && paddle1 < canvas.width-paddleWidth) {　　
         paddle1 += 7;
         }
         else if(leftPressed && paddle1 > 0) {
         paddle1 -= 7;
         }
 
-        if(rightS && paddle2 < canvas.width-paddleWidth) {　　//パドルの移動
+        if(rightS && paddle2 < canvas.width-paddleWidth) {　
         paddle2 += 7;
         }
         else if(leftA && paddle2 > 0) {
