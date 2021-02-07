@@ -43,32 +43,32 @@
 
     function keyDownHandler(e) {
         if(e.key == "Right" || e.key == "ArrowRight") {   //キー押して右なら、trueに
-        rightPressed = true;
+          rightPressed = true;
       　}
         else if(e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = true;
+          leftPressed = true;
       　}
 
       if(e.key == "s") {  
-        rightS = true;
+          rightS = true;
       　}
         else if(e.key == "a") {
-        leftA = true;
+          leftA = true;
       　}
     }
 
     function keyUpHandler(e) {
         if(e.key == "Right" || e.key == "ArrowRight") {　//キー離したらfalse
-        rightPressed = false;
+          rightPressed = false;
       　}
         else if(e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = false;
+          leftPressed = false;
       　}
 
       if(e.key == "s") {   
         rightS = false;
       　}
-        else if(e.key == "a") {
+      else if(e.key == "a") {
         leftA = false;
       　}
     }
